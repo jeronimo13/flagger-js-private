@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flag accepts entity prop 1`] = `"Variation 1"`;
+
+exports[`Flag can inherit flag prop from FlagSwitch 1`] = `"On!"`;
+
+exports[`Flag can override flag prop from FlagSwitch 1`] = `"Default"`;
+
+exports[`FlagSwitch accepts entity prop 1`] = `"Off!"`;
+
+exports[`withFlag adds flags.<name>.eligible property 1`] = `
+<div>
+  true
+</div>
+`;
+
+exports[`withFlag adds flags.<name>.enabled property 1`] = `
+<div>
+  true
+</div>
+`;
+
+exports[`withFlag adds flags.<name>.payload property 1`] = `
+<div>
+  {"a":"b"}
+</div>
+`;
+
+exports[`withFlag adds flags.<name>.treatment property 1`] = `
+<div>
+  on
+</div>
+`;
+
+exports[`withFlag wrapped components accept entity prop 1`] = `
+<div>
+  false
+</div>
+`;
+
+exports[`withFlag wrapped components handles invalid flag name 1`] = `
+<div>
+  false
+</div>
+`;

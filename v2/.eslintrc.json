@@ -1,0 +1,30 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended"
+  ],
+  "plugins": ["jest"],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "version": "0.14.0"
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js"],
+      "rules": {
+        "react/prop-types": "off"
+      },
+      "env": {
+        "jest/globals": true
+      }
+    }
+  ]
+}

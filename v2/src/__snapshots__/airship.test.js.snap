@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests using faked time \`bitcoin-pay\` gives treatment of \`variation-2\` and there is one exposure 1`] = `
+Array [
+  Object {
+    "eligible": true,
+    "flag": "bitcoin-pay",
+    "id": "1",
+    "methodCalled": "get_treatment",
+    "timeExposed": "1970-01-01T00:00:00.000Z",
+    "treatment": "variation-2",
+    "type": "User",
+  },
+]
+`;

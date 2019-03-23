@@ -1,0 +1,11 @@
+{
+  "name": "flagger",
+  "description": "Library for feature flagging",
+  "main": ["flagger.js", "flagger-react.js"],
+  "version": "2.0.2",
+  "authors": ["Airship Support <support@airshiphq.com>"],
+  "license": "MIT",
+  "keywords": ["feature", "flag"],
+  "homepage": "https://github.com/airshiphq/flagger-js",
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"]
+}

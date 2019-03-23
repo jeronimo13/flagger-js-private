@@ -1,0 +1,321 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can transform valid flagConfig because {} is valid 1`] = `
+Object {
+  "env": Object {
+    "envKey": null,
+    "hashKey": "env-1",
+  },
+  "flags": Array [],
+}
+`;
+
+exports[`can transform valid flagConfig because given flagConfig is valid 1`] = `
+Object {
+  "env": Object {
+    "envKey": null,
+    "hashKey": "env-1",
+  },
+  "flags": Array [
+    Object {
+      "codename": "super-rare-pokemon",
+      "flagStatus": "operational",
+      "flagType": "basic",
+      "hashKey": "super-rare-pokemon",
+      "isPaused": false,
+      "isWebAccessible": true,
+      "overrides": Array [],
+      "populations": Array [
+        Object {
+          "entityType": "User",
+          "hashKey": "population-1",
+          "percentage": 0,
+          "rules": Array [
+            Object {
+              "attributeName": "country",
+              "attributeType": "string",
+              "operator": "is",
+              "value": "Canada",
+              "valueList": null,
+            },
+            Object {
+              "attributeName": "age",
+              "attributeType": "int",
+              "operator": "lt",
+              "value": 15,
+              "valueList": null,
+            },
+          ],
+          "universes": Array [],
+        },
+      ],
+      "splits": Array [
+        Object {
+          "percentage": 1,
+          "treatmentId": "on-treatment",
+        },
+      ],
+      "treatments": Array [
+        Object {
+          "codename": "off",
+          "isControl": false,
+          "isOffTreatment": true,
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "codename": "on",
+          "isControl": false,
+          "isOffTreatment": false,
+          "treatmentId": "on-treatment",
+        },
+      ],
+    },
+    Object {
+      "codename": "trix",
+      "flagStatus": "operational",
+      "flagType": "basic",
+      "hashKey": "trix",
+      "isPaused": false,
+      "isWebAccessible": true,
+      "overrides": Array [],
+      "populations": Array [
+        Object {
+          "entityType": "User",
+          "hashKey": "population-1",
+          "percentage": 1,
+          "rules": Array [
+            Object {
+              "attributeName": "birthDate",
+              "attributeType": "date",
+              "operator": "after",
+              "value": "2000-09-01",
+              "valueList": null,
+            },
+          ],
+          "universes": Array [],
+        },
+      ],
+      "splits": Array [
+        Object {
+          "percentage": 1,
+          "treatmentId": "on-treatment",
+        },
+      ],
+      "treatments": Array [
+        Object {
+          "codename": "off",
+          "isControl": false,
+          "isOffTreatment": true,
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "codename": "on",
+          "isControl": false,
+          "isOffTreatment": false,
+          "treatmentId": "on-treatment",
+        },
+      ],
+    },
+    Object {
+      "codename": "new-dashboard",
+      "flagStatus": "operational",
+      "flagType": "basic",
+      "hashKey": "new-dashboard",
+      "isPaused": false,
+      "isWebAccessible": true,
+      "overrides": Array [],
+      "populations": Array [
+        Object {
+          "entityType": "User",
+          "hashKey": "population-1",
+          "percentage": 0.15,
+          "rules": Array [],
+          "universes": Array [],
+        },
+      ],
+      "splits": Array [
+        Object {
+          "percentage": 1,
+          "treatmentId": "on-treatment",
+        },
+      ],
+      "treatments": Array [
+        Object {
+          "codename": "off",
+          "isControl": false,
+          "isOffTreatment": true,
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "codename": "on",
+          "isControl": false,
+          "isOffTreatment": false,
+          "treatmentId": "on-treatment",
+        },
+      ],
+    },
+    Object {
+      "codename": "modern-warfare-xxi",
+      "flagStatus": "operational",
+      "flagType": "basic",
+      "hashKey": "modern-warfare-xxi",
+      "isPaused": false,
+      "isWebAccessible": true,
+      "overrides": Array [
+        Object {
+          "entityId": "54",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "64",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "23",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "65",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "59",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "43",
+          "entityType": "User",
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "entityId": "34",
+          "entityType": "User",
+          "treatmentId": "off-treatment",
+        },
+      ],
+      "populations": Array [
+        Object {
+          "entityType": "User",
+          "hashKey": "population-1",
+          "percentage": 0,
+          "rules": Array [],
+          "universes": Array [],
+        },
+      ],
+      "splits": Array [
+        Object {
+          "percentage": 1,
+          "treatmentId": "on-treatment",
+        },
+      ],
+      "treatments": Array [
+        Object {
+          "codename": "off",
+          "isControl": false,
+          "isOffTreatment": true,
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "codename": "on",
+          "isControl": false,
+          "isOffTreatment": false,
+          "treatmentId": "on-treatment",
+        },
+      ],
+    },
+    Object {
+      "codename": "more-ads",
+      "flagStatus": "operational",
+      "flagType": "basic",
+      "hashKey": "more-ads",
+      "isPaused": true,
+      "isWebAccessible": true,
+      "overrides": Array [
+        Object {
+          "entityId": "45",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "34",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "84",
+          "entityType": "User",
+          "treatmentId": "on-treatment",
+        },
+        Object {
+          "entityId": "43",
+          "entityType": "User",
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "entityId": "35",
+          "entityType": "User",
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "entityId": "65",
+          "entityType": "User",
+          "treatmentId": "off-treatment",
+        },
+      ],
+      "populations": Array [
+        Object {
+          "entityType": "User",
+          "hashKey": "population-1",
+          "percentage": 0.3,
+          "rules": Array [
+            Object {
+              "attributeName": "country",
+              "attributeType": "string",
+              "operator": "in",
+              "value": null,
+              "valueList": Array [
+                "USA",
+                "CANADA",
+                "DUBAI",
+              ],
+            },
+            Object {
+              "attributeName": "age",
+              "attributeType": "int",
+              "operator": "lt",
+              "value": 40,
+              "valueList": null,
+            },
+          ],
+          "universes": Array [],
+        },
+      ],
+      "splits": Array [
+        Object {
+          "percentage": 1,
+          "treatmentId": "on-treatment",
+        },
+      ],
+      "treatments": Array [
+        Object {
+          "codename": "off",
+          "isControl": false,
+          "isOffTreatment": true,
+          "treatmentId": "off-treatment",
+        },
+        Object {
+          "codename": "on",
+          "isControl": false,
+          "isOffTreatment": false,
+          "treatmentId": "on-treatment",
+        },
+      ],
+    },
+  ],
+}
+`;
