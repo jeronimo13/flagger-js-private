@@ -2,9 +2,20 @@
   "name": "flagger",
   "version": "3.0.0",
   "description": "Library for feature flagging",
-  "main": "index.js",
+  "main": "dist/flagger.cjs.js",
+  "module": "dist/flagger.esm.js",
+  "browser": {
+    "dist/flagger.cjs.js": "dist/flagger.umd.browser.js",
+    "dist/flagger.esm.js": "dist/flagger.esm.browser.js"
+  },
   "author": "Airship Engineering",
   "license": "MIT",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
@@ -36,6 +47,7 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-replace": "^2.1.1",
+    "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-uglify": "^6.0.2"
   },
   "dependencies": {

@@ -1,0 +1,2 @@
+function e(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function n(e,n){for(var o=0;o<n.length;o++){var t=n[o];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(e,t.key,t)}}export default new(function(){function o(){e(this,o),console.log("inited")}var t,r,a;return t=o,(r=[{key:"echo",value:function(e){console.log(e)}}])&&n(t.prototype,r),a&&n(t,a),o}());
+//# sourceMappingURL=flagger.esm.browser.js.map
