@@ -2216,7 +2216,7 @@ eslint-visitor-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
   integrity sha512-qzm/XxIbxm/FHyH341ZrbnMUpe+5Bocte9xkmFMzPMjRaZMcXww+MpBptFvtU+79L362nqiLhekCxCxDPaUMBQ==
 
-eslint@^5.15.3:
+eslint@^5.1.0, eslint@^5.15.3:
   version "5.15.3"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.15.3.tgz#c79c3909dc8a7fa3714fb340c11e30fd2526b8b5"
   integrity sha512-vMGi0PjCHSokZxE0NLp2VneGw5sio7SSiDNgIUn2tC0XkWJRNOIoHIg3CliLVfXnJsiHxGAYrkw0PieAu8+KYQ==
@@ -5326,6 +5326,14 @@ rollup-plugin-commonjs@^9.2.1:
     magic-string "^0.25.1"
     resolve "^1.10.0"
     rollup-pluginutils "^2.3.3"
+
+rollup-plugin-eslint@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-eslint/-/rollup-plugin-eslint-5.1.0.tgz#9acc575f9b162b160c18a7e59082303273ca0b10"
+  integrity sha512-jmjqDC42HQsevgBuGQuDb9xhkei4IRkwufAbd6pe5Cbd969p/CjO3SPIwVeINSxXrzrGh9VG72EKtYVFwybxpQ==
+  dependencies:
+    eslint "^5.1.0"
+    rollup-pluginutils "^2.3.0"
 
 rollup-plugin-json@^4.0.0:
   version "4.0.0"

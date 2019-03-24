@@ -5,8 +5,8 @@
   "main": "dist/flagger.cjs.js",
   "module": "dist/flagger.esm.js",
   "browser": {
-    "dist/flagger.cjs.js": "dist/flagger.umd.browser.js",
-    "dist/flagger.esm.js": "dist/flagger.esm.browser.js"
+    "./dist/flagger.cjs.js": "./dist/flagger.umd.browser.js",
+    "./dist/flagger.esm.js": "./dist/flagger.esm.browser.js"
   },
   "author": "Airship Engineering",
   "license": "MIT",
@@ -21,6 +21,7 @@
     "@babel/core": "^7.4.0",
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.4.0",
     "@babel/plugin-transform-runtime": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
@@ -42,6 +43,7 @@
     "rollup": "^1.7.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-eslint": "^5.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",

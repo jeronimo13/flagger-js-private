@@ -16,6 +16,7 @@ import replace from 'rollup-plugin-replace'
 import resolve from 'rollup-plugin-node-resolve'
 import {uglify} from 'rollup-plugin-uglify'
 import {terser} from 'rollup-plugin-terser'
+import {eslint} from 'rollup-plugin-eslint'
 
 import path from 'path'
 
@@ -36,6 +37,7 @@ export default [
       sourcemap: true
     },
     plugins: [
+      eslint({}),
       babel({
         envName: 'node'
       }),
@@ -56,6 +58,7 @@ export default [
       sourcemap: true
     },
     plugins: [
+      eslint({}),
       babel({
         envName: 'node'
       }),
@@ -77,6 +80,7 @@ export default [
       sourcemap: true
     },
     plugins: [
+      eslint({}),
       resolve({
         browser: true
       }),
@@ -95,7 +99,7 @@ export default [
       }),
       globals(),
       builtins(),
-      terser({compress: {reduce_funcs: false}})
+      // terser({compress: {reduce_funcs: false}})
     ]
   },
 
@@ -109,6 +113,7 @@ export default [
       sourcemap: true
     },
     plugins: [
+      eslint({}),
       resolve({
         browser: true
       }),
@@ -127,7 +132,7 @@ export default [
       }),
       globals(),
       builtins(),
-      terser({compress: {reduce_funcs: false}})
+      // terser({compress: {reduce_funcs: false}})
     ]
   },
 

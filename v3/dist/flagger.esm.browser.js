@@ -1,2 +1,44 @@
-function e(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function n(e,n){for(var o=0;o<n.length;o++){var t=n[o];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(e,t.key,t)}}export default new(function(){function o(){e(this,o),console.log("inited")}var t,r,a;return t=o,(r=[{key:"echo",value:function(e){console.log(e)}}])&&n(t.prototype,r),a&&n(t,a),o}());
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var Flagger =
+/*#__PURE__*/
+function () {
+  function Flagger() {
+    _classCallCheck(this, Flagger);
+    console.log('inited');
+  }
+
+  _createClass(Flagger, [{
+    key: "echo",
+    value: function echo(phrase) {
+      console.log(phrase);
+    }
+  }]);
+
+  return Flagger;
+}();
+
+var _flagger = new Flagger();
+
+export default _flagger;
 //# sourceMappingURL=flagger.esm.browser.js.map
