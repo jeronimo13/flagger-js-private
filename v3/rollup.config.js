@@ -27,7 +27,6 @@ const SRC_DIR = path.resolve(__dirname, 'lib')
 const BUILD_DIR = path.resolve(__dirname, 'dist')
 
 export default [
-
   // ESM Target for Nodejs
   {
     input: 'src/index.js',
@@ -98,7 +97,7 @@ export default [
         __SDK_NAME__: 'js'
       }),
       globals(),
-      builtins(),
+      builtins()
       // terser({compress: {reduce_funcs: false}})
     ]
   },
@@ -131,13 +130,65 @@ export default [
         __SDK_NAME__: 'js'
       }),
       globals(),
-      builtins(),
+      builtins()
       // terser({compress: {reduce_funcs: false}})
     ]
   },
 
-]
+  // CJS target for React components
+  {
+    input: 'src/react.js',
+    output: {
+      file: path.resolve(BUILD_DIR, 'flagger.react.cjs.browser.js'),
+      format: 'cjs',
+      sourcemap: true
+    },
+    external: ['react'],
+    plugins: [
+      babel({
+        envName: 'node'
+      }),
+      json(),
+      replace({
+        __SDK_NAME__: 'react-ssr'
+      })
+    ]
+  },
 
+  // ESM Target for React components
+  {
+    input: 'src/react.js',
+    output: {
+      file: path.resolve(BUILD_DIR, 'flagger.react.esm.browser.js'),
+      format: 'esm',
+      sourcemap: true
+    },
+    plugins: [
+      eslint({}),
+      resolve({
+        browser: true
+      }),
+      commonjs({
+        exclude: 'src/**'
+      }),
+      babel({
+        envName: 'browser',
+        exclude: [
+          'node_modules/@babel/runtime-corejs2/core-js/**',
+          'node_modules/rollup-plugin-commonjs/**',
+          'node_modules/core-js/**'
+        ]
+      }),
+      json(),
+      replace({
+        __SDK_NAME__: 'react'
+      }),
+      globals(),
+      builtins()
+      // terser({compress: {reduce_funcs: false}})
+    ]
+  }
+]
 
 /*
 
@@ -156,7 +207,6 @@ export default [
 07 compat-browser.js => Browser + umd
 
 */
-
 
 // export default [
 //   {
