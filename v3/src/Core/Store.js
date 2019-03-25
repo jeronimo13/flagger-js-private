@@ -1,6 +1,7 @@
 // Builtins and externals
 
 // Internals
+import Flag from './Flag'
 
 export default class Store {
   constructor() {
@@ -8,23 +9,21 @@ export default class Store {
     this.store = {}
   }
 
-  getStore(key) {
-    if (key in this.store) {
-      return this.store[key]
-    } else {
-      throw new Error(`Key ${key} not in store`)
-    }
-  }
+  // getStore(key) {
+  //   if (key in this.store) {
+  //     return this.store[key]
+  //   } else {
+  //     throw new Error(`Key ${key} not in store`)
+  //   }
+  // }
 
-  setStore(key, value) {
-    this.store[key] = value
-  }
+  // setStore(key, value) {
+  //   this.store[key] = value
+  // }
 
   setGatingInfo(gatingInfo) {
     const flagMap = this._getFlagMap(gatingInfo)
     this.store['flags'] = flagMap
-
-    // Send signal?
   }
 
   // PRIVATE API
