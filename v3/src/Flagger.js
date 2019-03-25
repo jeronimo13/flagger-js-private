@@ -6,46 +6,46 @@ import FlaggerCore from './core/Flagger'
 import logger from './logger'
 
 export default class Flagger extends FlaggerCore {
-
   // Public API
 
-	constructor() {
+  constructor() {
     super()
 
     logger.log('inited with logger')
 
-    axios.get('/')
-      .then((response) => {
+    axios
+      .get('/')
+      .then(response => {
         logger.log(response)
       })
-      .catch((error) => {
+      .catch(error => {
         logger.log(error)
       })
 
     // subscribes to configuration complete signal / set configured compelte bool to true
   }
 
-	echo(phrase) {
-		logger.log(phrase)
-	}
+  echo(phrase) {
+    logger.log(phrase)
+  }
 
-//   configure(options) {
-//     // SEND_SIGNAL: Start configuration...
-//   }
+  //   configure(options) {
+  //     // SEND_SIGNAL: Start configuration...
+  //   }
 
-//   flag(flagName) {
-//     // returns a flag
-//   }
+  //   flag(flagName) {
+  //     // returns a flag
+  //   }
 
-//   shutdown() {
+  //   shutdown() {
 
-//   }
+  //   }
 
-//   publish(entities) {
+  //   publish(entities) {
 
-//   }
+  //   }
 
-//   identify(entity) {
+  //   identify(entity) {
 
-//   }
+  //   }
 }

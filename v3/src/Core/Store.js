@@ -4,7 +4,6 @@
 
 export default class Store {
   constructor() {
-
     // Empty store
     this.store = {}
   }
@@ -76,5 +75,4 @@ export default class Store {
 
     return map
   }
-
 }

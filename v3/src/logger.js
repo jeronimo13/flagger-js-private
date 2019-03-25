@@ -1,17 +1,13 @@
 const LEVELS = ['debug', 'info', 'warn', 'error'] // default is 'log'
 
 class Logger {
-
   constructor() {
     this.validLevels = LEVELS
   }
 
-  setLogLevel(level='error') {
+  setLogLevel(level = 'error') {
     if (LEVELS.indexOf(level) >= 0) {
-      this.validLevels = LEVELS.slice(
-        LEVELS.indexOf(level),
-        LEVELS.length
-      )
+      this.validLevels = LEVELS.slice(LEVELS.indexOf(level), LEVELS.length)
     }
   }
 
@@ -44,7 +40,6 @@ class Logger {
   log(x) {
     this.info(x)
   }
-
 }
 
 const _instance = new Logger()
