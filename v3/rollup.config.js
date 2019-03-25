@@ -97,7 +97,7 @@ export default [
         __SDK_NAME__: 'js'
       }),
       globals(),
-      builtins()
+      builtins(),
       // terser({compress: {reduce_funcs: false}})
     ]
   },
@@ -130,7 +130,7 @@ export default [
         __SDK_NAME__: 'js'
       }),
       globals(),
-      builtins()
+      builtins(),
       // terser({compress: {reduce_funcs: false}})
     ]
   },
@@ -143,7 +143,10 @@ export default [
       format: 'cjs',
       sourcemap: true
     },
-    external: ['react'],
+    external: [
+      'react',
+      'prop-types'
+    ],
     plugins: [
       babel({
         envName: 'node'
@@ -163,6 +166,10 @@ export default [
       format: 'esm',
       sourcemap: true
     },
+    external: [
+      'react',
+      'prop-types'
+    ],
     plugins: [
       eslint({}),
       resolve({
@@ -184,7 +191,7 @@ export default [
         __SDK_NAME__: 'react'
       }),
       globals(),
-      builtins()
+      builtins(),
       // terser({compress: {reduce_funcs: false}})
     ]
   }

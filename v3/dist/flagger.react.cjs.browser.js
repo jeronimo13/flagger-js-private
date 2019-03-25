@@ -1,18 +1,17 @@
-'use strict'
+'use strict';
 
-Object.defineProperty(exports, '__esModule', {value: true})
+Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault(ex) {
-  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex
-}
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var React = _interopDefault(require('react'))
+var React = _interopDefault(require('react'));
 
 class FlagProvider extends React.Component {
   render() {
-    return React.createElement('div', null, 'Test React Component')
+    return React.createElement("div", null, "Test React Component");
   }
+
 }
 
-exports.FlagProvider = FlagProvider
+exports.FlagProvider = FlagProvider;
 //# sourceMappingURL=flagger.react.cjs.browser.js.map
