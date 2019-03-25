@@ -2895,15 +2895,15 @@ var assign = _core.Object.assign;
 
 var assign$1 = assign;
 
+// Builtins and externals
+// Internals
 var Store =
 /*#__PURE__*/
 function () {
   function Store() {
     _classCallCheck(this, Store);
 
-    // do stuff
-    console.log('stuff done'); // Empty store
-
+    // Empty store
     this.store = {};
   }
 
@@ -2973,53 +2973,89 @@ function () {
   return Store;
 }();
 
-var Flagger =
+var Flagger = // Public API
+function Flagger() {
+  _classCallCheck(this, Flagger);
+
+  // Variable holding whether configuration is done
+  this.configurationComplete = false; // Instantiate an instance of Store
+
+  this.store = new Store();
+} // configure(flagConfig) {
+//   // Set this in store
+// }
+// flag(flagName) {
+//   // returns a flag
+// }
+// shutdown() {
+// }
+// publish(entities) {
+// }
+// identify(entity) {
+// }
+;
+
+var LEVELS = ['debug', 'info', 'warn', 'error']; // default is 'log'
+
+var Logger =
 /*#__PURE__*/
 function () {
-  // Public API
-  function Flagger() {
-    _classCallCheck(this, Flagger);
+  function Logger() {
+    _classCallCheck(this, Logger);
 
-    // Variable holding whether configuration is done
-    this.configurationComplete = false; // Instantiate an instance of Store
-
-    this.store = new Store();
+    this.validLevels = LEVELS;
   }
 
-  _createClass(Flagger, [{
-    key: "configure",
-    value: function configure(flagConfig) {// Set this in store
+  _createClass(Logger, [{
+    key: "setLogLevel",
+    value: function setLogLevel() {
+      var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'error';
+
+      if (LEVELS.indexOf(level) >= 0) {
+        this.validLevels = LEVELS.slice(LEVELS.indexOf(level), LEVELS.length);
+      }
     }
   }, {
-    key: "flag",
-    value: function flag(flagName) {// returns a flag
+    key: "debug",
+    value: function debug(x) {
+      if (this.validLevels.includes('debug')) {
+        // eslint-disable-next-line no-console
+        console.debug(x);
+      }
     }
   }, {
-    key: "shutdown",
-    value: function shutdown() {}
+    key: "info",
+    value: function info(x) {
+      if (this.validLevels.includes('info')) {
+        // eslint-disable-next-line no-console
+        console.info(x);
+      }
+    }
   }, {
-    key: "publish",
-    value: function publish(entities) {}
+    key: "warn",
+    value: function warn(x) {
+      if (this.validLevels.includes('warn')) {
+        // eslint-disable-next-line no-console
+        console.warn(x);
+      }
+    }
   }, {
-    key: "identify",
-    value: function identify(entity) {}
+    key: "error",
+    value: function error(x) {
+      // eslint-disable-next-line no-console
+      console.error(x); // Always permit error logging
+    }
+  }, {
+    key: "log",
+    value: function log(x) {
+      this.info(x);
+    }
   }]);
 
-  return Flagger;
+  return Logger;
 }();
 
-var LEVELS = ['debug', 'log', 'info', 'error'];
-
-var Logger = function Logger() {
-  _classCallCheck(this, Logger);
-};
-LEVELS.forEach(function (level) {
-  Logger.prototype[level] = function (logCallArgs) {
-    console.log.apply(null, logCallArgs);
-  };
-});
-
-var logger = new Logger();
+var _instance = new Logger();
 
 var Flagger$1 =
 /*#__PURE__*/
@@ -3033,12 +3069,11 @@ function (_FlaggerCore) {
     _classCallCheck(this, Flagger);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Flagger).call(this));
-    console.log('inited');
-    logger.log('inited with logger');
+    _instance.log('inited with logger');
     axios$1.get('/').then(function (response) {
-      console.log('response');
+      _instance.log(response);
     }).catch(function (error) {
-      console.log('error');
+      _instance.log(error);
     }); // subscribes to configuration complete signal / set configured compelte bool to true
 
     return _this;
@@ -3047,25 +3082,20 @@ function (_FlaggerCore) {
   _createClass(Flagger, [{
     key: "echo",
     value: function echo(phrase) {
-      console.log(phrase);
-    }
-  }, {
-    key: "configure",
-    value: function configure(options) {// SEND_SIGNAL: Start configuration...
-    }
-  }, {
-    key: "flag",
-    value: function flag(flagName) {// returns a flag
-    }
-  }, {
-    key: "shutdown",
-    value: function shutdown() {}
-  }, {
-    key: "publish",
-    value: function publish(entities) {}
-  }, {
-    key: "identify",
-    value: function identify(entity) {}
+      _instance.log(phrase);
+    } //   configure(options) {
+    //     // SEND_SIGNAL: Start configuration...
+    //   }
+    //   flag(flagName) {
+    //     // returns a flag
+    //   }
+    //   shutdown() {
+    //   }
+    //   publish(entities) {
+    //   }
+    //   identify(entity) {
+    //   }
+
   }]);
 
   return Flagger;

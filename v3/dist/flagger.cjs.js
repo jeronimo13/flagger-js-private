@@ -4,11 +4,11 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var axios = _interopDefault(require('axios'));
 
+// Builtins and externals
+// Internals
 class Store {
   constructor() {
-    // do stuff
-    console.log('stuff done'); // Empty store
-
+    // Empty store
     this.store = {};
   }
 
@@ -79,60 +79,97 @@ class Flagger {
     this.configurationComplete = false; // Instantiate an instance of Store
 
     this.store = new Store();
-  }
+  } // configure(flagConfig) {
+  //   // Set this in store
+  // }
+  // flag(flagName) {
+  //   // returns a flag
+  // }
+  // shutdown() {
+  // }
+  // publish(entities) {
+  // }
+  // identify(entity) {
+  // }
 
-  configure(flagConfig) {// Set this in store
-  }
-
-  flag(flagName) {// returns a flag
-  }
-
-  shutdown() {}
-
-  publish(entities) {}
-
-  identify(entity) {}
 
 }
 
-const LEVELS = ['debug', 'log', 'info', 'error'];
-class Logger {}
-LEVELS.forEach(level => {
-  Logger.prototype[level] = logCallArgs => {
-    console.log.apply(null, logCallArgs);
-  };
-});
+const LEVELS = ['debug', 'info', 'warn', 'error']; // default is 'log'
+
+class Logger {
+  constructor() {
+    this.validLevels = LEVELS;
+  }
+
+  setLogLevel(level = 'error') {
+    if (LEVELS.indexOf(level) >= 0) {
+      this.validLevels = LEVELS.slice(LEVELS.indexOf(level), LEVELS.length);
+    }
+  }
+
+  debug(x) {
+    if (this.validLevels.includes('debug')) {
+      // eslint-disable-next-line no-console
+      console.debug(x);
+    }
+  }
+
+  info(x) {
+    if (this.validLevels.includes('info')) {
+      // eslint-disable-next-line no-console
+      console.info(x);
+    }
+  }
+
+  warn(x) {
+    if (this.validLevels.includes('warn')) {
+      // eslint-disable-next-line no-console
+      console.warn(x);
+    }
+  }
+
+  error(x) {
+    // eslint-disable-next-line no-console
+    console.error(x); // Always permit error logging
+  }
+
+  log(x) {
+    this.info(x);
+  }
+
+}
+
+const _instance = new Logger();
 
 // Builtins and externals
-const logger = new Logger();
 class Flagger$1 extends Flagger {
   // Public API
   constructor() {
     super();
-    console.log('inited');
-    logger.log('inited with logger');
+    _instance.log('inited with logger');
     axios.get('/').then(response => {
-      console.log('response');
+      _instance.log(response);
     }).catch(error => {
-      console.log('error');
+      _instance.log(error);
     }); // subscribes to configuration complete signal / set configured compelte bool to true
   }
 
   echo(phrase) {
-    console.log(phrase);
-  }
+    _instance.log(phrase);
+  } //   configure(options) {
+  //     // SEND_SIGNAL: Start configuration...
+  //   }
+  //   flag(flagName) {
+  //     // returns a flag
+  //   }
+  //   shutdown() {
+  //   }
+  //   publish(entities) {
+  //   }
+  //   identify(entity) {
+  //   }
 
-  configure(options) {// SEND_SIGNAL: Start configuration...
-  }
-
-  flag(flagName) {// returns a flag
-  }
-
-  shutdown() {}
-
-  publish(entities) {}
-
-  identify(entity) {}
 
 }
 

@@ -1,6 +1,11 @@
+// Builtins and externals
+
+// Internals
+import logger from './logger'
+
 export default class Flag {
   constructor() {
     // do stuff
-    console.log('stuff done')
+    logger.log('stuff done')
   }
 }

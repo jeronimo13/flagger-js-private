@@ -10,7 +10,6 @@ export default class Flag extends FlagCore {
 
   constructor() {
     super()
-    console.log('inited')
   }
 
 }

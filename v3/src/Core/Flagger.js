@@ -11,24 +11,24 @@ export default class Flagger {
     this.store = new Store()
   }
 
-  configure(flagConfig) {
-    // Set this in store
+  // configure(flagConfig) {
+  //   // Set this in store
 
-  }
+  // }
 
-  flag(flagName) {
-    // returns a flag
-  }
+  // flag(flagName) {
+  //   // returns a flag
+  // }
 
-  shutdown() {
+  // shutdown() {
 
-  }
+  // }
 
-  publish(entities) {
+  // publish(entities) {
 
-  }
+  // }
 
-  identify(entity) {
+  // identify(entity) {
 
-  }
+  // }
 }

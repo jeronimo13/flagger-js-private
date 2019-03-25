@@ -3,9 +3,7 @@ import axios from 'axios'
 
 // Internals
 import FlaggerCore from './core/Flagger'
-import Logger from './logger'
-
-const logger = new Logger()
+import logger from './logger'
 
 export default class Flagger extends FlaggerCore {
 
@@ -14,42 +12,40 @@ export default class Flagger extends FlaggerCore {
 	constructor() {
     super()
 
-		const initVar = 'test'
-		console.log('inited')
     logger.log('inited with logger')
 
     axios.get('/')
       .then((response) => {
-        console.log('response')
+        logger.log(response)
       })
       .catch((error) => {
-        console.log('error')
+        logger.log(error)
       })
 
     // subscribes to configuration complete signal / set configured compelte bool to true
   }
 
 	echo(phrase) {
-		console.log(phrase)
+		logger.log(phrase)
 	}
 
-  configure(options) {
-    // SEND_SIGNAL: Start configuration...
-  }
+//   configure(options) {
+//     // SEND_SIGNAL: Start configuration...
+//   }
 
-  flag(flagName) {
-    // returns a flag
-  }
+//   flag(flagName) {
+//     // returns a flag
+//   }
 
-  shutdown() {
+//   shutdown() {
 
-  }
+//   }
 
-  publish(entities) {
+//   publish(entities) {
 
-  }
+//   }
 
-  identify(entity) {
+//   identify(entity) {
 
-  }
+//   }
 }

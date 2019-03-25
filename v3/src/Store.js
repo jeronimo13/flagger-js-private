@@ -3,6 +3,7 @@ import axios from 'axios'
 
 // Internals
 import StoreCore from './core/Store'
+import logger from './logger'
 
 export default class Flag extends StoreCore {
 
@@ -10,7 +11,7 @@ export default class Flag extends StoreCore {
 
   constructor() {
     super()
-    console.log('inited')
+    logger.log('inited')
   }
 
 }

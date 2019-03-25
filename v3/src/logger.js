@@ -1,44 +1,52 @@
-const LEVELS = ['debug', 'log', 'info', 'error'] // default is 'log'
+const LEVELS = ['debug', 'info', 'warn', 'error'] // default is 'log'
 
 class Logger {
-  constructor(options) {
-    this.validLevels = LEVELS
 
+  constructor() {
+    this.validLevels = LEVELS
   }
 
-  setLogLevel(level) {
-    if (LEVELS.indexOf(level) > 0) {
-      this.validLevels = LEVELS.slice(LEVELS.indexOf(level), LEVELS.length - 1)
+  setLogLevel(level='error') {
+    if (LEVELS.indexOf(level) >= 0) {
+      this.validLevels = LEVELS.slice(
+        LEVELS.indexOf(level),
+        LEVELS.length
+      )
     }
   }
 
   debug(x) {
     if (this.validLevels.includes('debug')) {
+      // eslint-disable-next-line no-console
       console.debug(x)
-    }
-  }
-
-  log(x) {
-    if (this.validLevels.includes('log')) {
-      console.log(x)
     }
   }
 
   info(x) {
     if (this.validLevels.includes('info')) {
+      // eslint-disable-next-line no-console
       console.info(x)
     }
   }
 
-  error(x) {
-    if (this.validLevels.includes('error')) {
-      console.error(x)
+  warn(x) {
+    if (this.validLevels.includes('warn')) {
+      // eslint-disable-next-line no-console
+      console.warn(x)
     }
+  }
+
+  error(x) {
+    // eslint-disable-next-line no-console
+    console.error(x) // Always permit error logging
+  }
+
+  log(x) {
+    this.info(x)
   }
 
 }
 
 const _instance = new Logger()
-Object.freeze(_instance)
 
 export default _instance

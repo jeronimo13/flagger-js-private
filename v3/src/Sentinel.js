@@ -1,8 +1,11 @@
 import EventEmitter from 'events'
 
+// Internals
+import logger from './logger'
+
 class Sentinel extends EventEmitter {
   constructor() {
     super()
-    console.log('pass')
+    logger.log('pass')
   }
 }

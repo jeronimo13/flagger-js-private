@@ -1,18 +1,24 @@
+// Builtins and externals
+
+// Internals
+
 export default class Store {
   constructor() {
-    // do stuff
-    console.log('stuff done')
 
     // Empty store
     this.store = {}
   }
 
-  get(key) {
+  getStore(key) {
     if (key in this.store) {
       return this.store[key]
     } else {
       throw new Error(`Key ${key} not in store`)
     }
+  }
+
+  setStore(key, value) {
+    this.store[key] = value
   }
 
   setGatingInfo(gatingInfo) {
