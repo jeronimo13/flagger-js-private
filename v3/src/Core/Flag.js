@@ -1,7 +1,7 @@
 // Builtins and externals
 
 // Internals
-import logger from './logger'
+import logger from '../logger'
 
 export default class Flag {
   constructor(flag) {
