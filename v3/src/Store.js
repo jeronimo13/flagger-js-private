@@ -1,5 +1,4 @@
 // Builtins and externals
-import axios from 'axios'
 
 // Internals
 import StoreCore from './core/Store'
