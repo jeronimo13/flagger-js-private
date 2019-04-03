@@ -60,7 +60,6 @@
     "@babel/runtime-corejs2": "^7.4.2",
     "ajv": "^6.10.0",
     "ajv-errors": "^1.0.1",
-    "axios": "^0.18.0",
     "eventsource": "^1.0.7",
     "md5": "^2.2.1",
     "prop-types": "^15.7.2"
