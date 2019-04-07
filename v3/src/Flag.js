@@ -10,4 +10,12 @@ export default class Flag extends FlagCore {
   constructor() {
     super()
   }
+
+  getTreatment(entity) {
+    // track stats
+
+    const treatment = super.getTreatment(entity)
+
+    // end track stats
+  }
 }

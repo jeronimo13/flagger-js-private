@@ -6,7 +6,10 @@ import Flag from './Flag'
 export default class Store {
   constructor() {
     // Empty store
-    this.store = {}
+    this.store = {
+      flags: [],
+      identity: null
+    }
   }
 
   // getStore(key) {
@@ -21,14 +24,17 @@ export default class Store {
   //   this.store[key] = value
   // }
 
-  setGatingInfo(gatingInfo) {
-    const flagMap = this._getFlagMap(gatingInfo)
-    this.store['flags'] = flagMap
+  getFlag(flagName) {
+    const flag = this.store['flags'][flagName]
+    return flag !== null ? flag : new Flag(flagName)
   }
 
-  // PRIVATE API
+  setGatingInfo(gatingInfo) {
+    this.store['flags'] = this._generateFlagMap(gatingInfo)
+    // console.log(this.store)
+  }
 
-  _getFlagMap(gatingInfo) {
+  _generateFlagMap(gatingInfo) {
     const map = {}
 
     const flags = gatingInfo.flags

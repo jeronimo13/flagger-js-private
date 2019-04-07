@@ -1,393 +1,239 @@
 // Builtins and externals
 import Ajv from 'ajv'
 import ajvErrors from 'ajv-errors'
-import md5 from 'md5'
 import stringify from 'fast-json-stable-stringify'
+import util from 'util'
 
 // Internals
-import logger from './logger'
+import logger from '../logger'
 
-const SCHEMA = {
-  type: 'object',
-  properties: {
-    type: {
-      type: 'string',
-      pattern: '^([A-Z][a-zA-Z]*)+$',
-      maxLength: 50,
-      minLength: 1,
-      errorMessage: {
-        type:
-          'Entity type must be a string that starts with a capital letter like [C]ar or [U]ser',
-        maxLength:
-          'Entity type must be a non-empty string of 50 characters or less',
-        minLength:
-          'Entity type must be a non-empty string of 50 characters or less'
-      }
+const DEFAULT_ENTITY_TYPE = 'User'
+
+const createSchema = ({group = false} = {}) => {
+  const schemaType = group ? 'Group' : 'Entity'
+
+  return {
+    type: 'object',
+    required: ['id'],
+    additionalProperties: false,
+    errorMessage: {
+      type: `Each ${schemaType.toLowerCase()} is represented using a dictionary`,
+      required: `Each ${schemaType.toLowerCase()} must have an "id" field`,
+      additionalProperties:
+        'Allowed properties are: "type", "id", "displayName", "attributes", "group", and "isGroup". "id" is required, the rest are optional.'
     },
-    isGroup: {
-      type: 'boolean',
-      errorMessage: {
-        type: '`isGroup` must be a boolean'
-      }
-    },
-    id: {
-      type: ['string', 'integer'],
-      pattern: '^[ -~]+$',
-      maxLength: 250,
-      minLength: 1,
-      errorMessage: {
-        type:
-          "An entity's `id` must be a string or integer. An integer `id` will be cast into a string.",
-        maxLength:
-          "An entity's `id` must be a non-empty string of 250 characters or less.",
-        minLength:
-          "An entity's `id` must be a non-empty string of 250 characters or less."
-      }
-    },
-    displayName: {
-      type: 'string',
-      maxLength: 250,
-      minLength: 1,
-      errorMessage: {
-        type: "An entity's `displayName` must be a string",
-        maxLength:
-          "An entity's `displayName` must be a non-empty string of 250 characters or less.",
-        minLength:
-          "An entity's `displayName` must be a non-empty string of 250 characters or less."
-      }
-    },
-    attributes: {
-      type: 'object',
-      patternProperties: {
-        '^[a-zA-Z]$|^[a-zA-Z_]{0,48}[a-zA-Z]$': {
-          oneOf: [
-            {
-              type: 'string',
-              maxLength: 3000,
-              errorMessage: {
-                type:
-                  "An entity's attribute value must be a string, boolean, or number.",
-                maxLength:
-                  "An entity's string attribute must be 3000 characters or less."
-              }
-            },
-            {
-              type: 'boolean',
-              errorMessage: {
-                type:
-                  "An entity's attribute value must be a string, boolean, or number."
-              }
-            },
-            {
-              type: 'number',
-              errorMessage: {
-                type:
-                  "An entity's attribute value must be a string, boolean, or number."
-              }
-            }
-          ],
-          errorMessage: {
-            oneOf:
-              "An entity's attribute value must be a string, boolean, or number."
-          }
+    properties: {
+      type: {
+        type: 'string',
+        pattern: '^([A-Z][a-zA-Z]*)+$',
+        maxLength: 50,
+        minLength: 1,
+        errorMessage: {
+          type: `${schemaType} type must be a string that starts with a capital letter like [C]ar or [U]ser`,
+          maxLength: `${schemaType} type must be a non-empty string of 50 characters or less`,
+          minLength: `${schemaType} type must be a non-empty string of 50 characters or less`
         }
       },
-      maxProperties: 100,
-      additionalProperties: false,
-      errorMessage: {
-        maxProperties: 'There can only be up to 100 attributes for an entity.',
-        additionalProperties:
-          'Each attribute must begin and end with an alphabet letter (a-z, A-Z). In between, allowed characters are a-z, A-Z, and "_". For example: isStudent or is_student. Preceding or trailing underscore is not allowed (i.e., _is_student or is_student_). Each attribute value must be a number, string or boolean.'
-      }
-    },
-    group: {
-      type: ['object', 'null'],
-      properties: {
-        type: {
-          type: 'string',
-          pattern: '^([A-Z][a-zA-Z]*)+$',
-          maxLength: 50,
-          minLength: 1,
-          errorMessage: {
-            type:
-              'Group type must be a string that starts with a capital letter like [C]arGroup or [U]serGroup. Camel casing is used to separate words.',
-            maxLength:
-              'Group type must be a non-empty string of 50 characters or less',
-            minLength:
-              'Group type must be a non-empty string of 50 characters or less'
-          }
-        },
-        isGroup: {
-          type: 'boolean',
-          enum: [true],
-          errorMessage: {
-            type: '`isGroup` must be a boolean',
-            enum: '`isGroup` must always be true for an group'
-          }
-        },
-        id: {
-          type: ['string', 'integer'],
-          pattern: '^[ -~]+$',
-          maxLength: 250,
-          minLength: 1,
-          errorMessage: {
-            type:
-              "A group's `id` must be a string or integer. An integer `id` will be cast into a string.",
-            maxLength:
-              "A group's `id` must be a non-empty string of 250 characters or less.",
-            minLength:
-              "A group's `id` must be a non-empty string of 250 characters or less."
-          }
-        },
-        displayName: {
-          type: 'string',
-          maxLength: 250,
-          minLength: 1,
-          errorMessage: {
-            type: "A group's `displayName` must be a string",
-            maxLength:
-              "A group's `displayName` must be a non-empty string of 250 characters or less.",
-            minLength:
-              "A group's `displayName` must be a non-empty string of 250 characters or less."
-          }
-        },
-        attributes: {
-          type: 'object',
-          patternProperties: {
-            '^[a-zA-Z]$|^[a-zA-Z_]{0,48}[a-zA-Z]$': {
-              oneOf: [
-                {
-                  type: 'string',
-                  maxLength: 3000,
-                  errorMessage: {
-                    type:
-                      "A group's attribute value must be a string, boolean, or number.",
-                    maxLength:
-                      "A group's string attribute must be 3000 characters or less."
-                  }
-                },
-                {
-                  type: 'boolean',
-                  errorMessage: {
-                    type:
-                      "A group's attribute value must be a string, boolean, or number."
-                  }
-                },
-                {
-                  type: 'number',
-                  errorMessage: {
-                    type:
-                      "A group's attribute value must be a string, boolean, or number."
-                  }
+      isGroup: {
+        type: 'boolean',
+        errorMessage: {
+          type: '"isGroup" must be a boolean'
+        }
+      },
+      id: {
+        type: ['string', 'integer'],
+        pattern: '^[ -~]+$',
+        maxLength: 250,
+        minLength: 1,
+        errorMessage: {
+          type: `${schemaType} "id" must be a string or integer. An integer will be cast into a string`,
+          maxLength: `${schemaType} "id" must be a non-empty string of 250 characters or less`,
+          minLength: `${schemaType} "id" must be a non-empty string of 250 characters or less`
+        }
+      },
+      displayName: {
+        type: 'string',
+        maxLength: 250,
+        minLength: 1,
+        errorMessage: {
+          type: `${schemaType} "displayName" must be a string`,
+          maxLength: `${schemaType} "displayName" must be a non-empty string of 250 characters or less`,
+          minLength: `${schemaType} "displayName" must be a non-empty string of 250 characters or less`
+        }
+      },
+      attributes: {
+        type: 'object',
+        patternProperties: {
+          '^[a-zA-Z]$|^[a-zA-Z_]{0,48}[a-zA-Z]$': {
+            oneOf: [
+              {
+                type: 'string',
+                maxLength: 3000,
+                errorMessage: {
+                  type: `${schemaType} attribute values must be a string, boolean, or number`,
+                  maxLength: `${schemaType} string attributes must be 3000 characters or less`
                 }
-              ],
-              errorMessage: {
-                oneOf:
-                  "A group's attribute value must be a string, boolean, or number."
+              },
+              {
+                type: 'boolean',
+                errorMessage: {
+                  type: `${schemaType} attribute values must be a string, boolean, or number`
+                }
+              },
+              {
+                type: 'number',
+                errorMessage: {
+                  type: `${schemaType} attribute values must be a string, boolean, or number`
+                }
               }
+            ],
+            errorMessage: {
+              oneOf: `${schemaType} attribute values must be a string, boolean, or number`
             }
-          },
-          maxProperties: 100,
-          additionalProperties: false,
-          errorMessage: {
-            additionalProperties:
-              'Each attribute must begin and end with an alphabet letter (a-z, A-Z). In between, allowed characters are a-z, A-Z, and "_". For example: isStudent or is_student. Preceding or trailing underscore is not allowed (i.e., _is_student or is_student_). Each attribute value must be a number, string or boolean.'
           }
+        },
+        maxProperties: 100,
+        additionalProperties: false,
+        errorMessage: {
+          maxProperties: `There can only be up to 100 attributes for an ${schemaType.toLowerCase()}`,
+          additionalProperties:
+            'Each attribute name must begin and end with an alphabet letter (a-z, A-Z) and be less than 50 characters. Allowed characters are a-z, A-Z, and "_". For example: isStudent or is_student. Preceding or trailing underscore is not allowed (i.e., _is_student or is_student_). Each attribute value must be a number, string or boolean.'
         }
-      },
-      required: ['id'],
-      additionalProperties: false,
-      errorMessage: {
-        required: 'Each group must have an `id` field.',
-        additionalProperties:
-          'Allowed properties for a group are: `type`, `id`, `displayName`, `attributes`, and `isGroup`. `id` is required, rest are optional.'
       }
     }
-  },
-  required: ['id'],
-  additionalProperties: false,
-  errorMessage: {
-    type: 'An entity is represented using a dictionary',
-    required: 'Each entity must have an `id` field.',
-    additionalProperties:
-      'Allowed properties for an entity are: `type`, `id`, `displayName`, `attributes`, `group`, and `isGroup`. `id` is required, rest are optional.'
   }
 }
 
-const ajv = Ajv({allErrors: true, jsonPointers: true})
+const baseSchema = createSchema()
+
+const SCHEMA = {
+  ...baseSchema,
+  properties: {
+    ...baseSchema.properties,
+    group: createSchema({group: true})
+  }
+}
+
+const ajv = new Ajv({allErrors: true, jsonPointers: true})
 ajvErrors(ajv)
 const validate = ajv.compile(SCHEMA)
 
-export const DEFAULT_ENTITY_TYPE = 'User'
-
 export default class Entity {
-  // constructor
+  constructor(input) {
+    this.entity = null
 
-  // isValid
+    Entity.hydrateInput(input)
 
-  // getHash: only for the purpose of LRU (checking whether is already stored in store)
-
-  // getId
-
-  // getEntity:
-
-  // getGroupEntity: get nested group entity
-
-  // static: isValidEntity
-
-  // static: fillInFields
-
-  constructor(obj) {
-    let isValid = Entity.isValidEntity(obj)
-
-    if (!isValid) {
-      this.object = null
+    if (Entity.isValidInput(input)) {
+      // Lastly, check `isGroup` and `group` property consistency
+      if (input.isGroup === true && input.group !== undefined) {
+        logger.warn(
+          'Entity format is invalid. Group entity cannot be child of another group entity.'
+        )
+        return
+      } else {
+        this.entity = input
+      }
+    } else {
       return
     }
-
-    obj = Entity._cloneObject(obj)
-    isValid = Entity._fillInFields(obj)
-
-    if (!isValid) {
-      this.object = null
-      return
-    }
-
-    this.object = obj
   }
 
-  static isValidEntity(obj) {
-    let isValid = validate(obj)
+  static isValidInput(input) {
+    const isValid = validate(input)
+
     if (!isValid) {
-      logger(validate.errors.map(e => e.message))
-    }
-
-    if (isValid) {
-      const isGroup = obj.isGroup !== undefined ? obj.isGroup : false
-      const type = obj.type !== undefined ? obj.type : DEFAULT_ENTITY_TYPE
-
-      const groupIndex = type.lastIndexOf('Group')
-      if (
-        groupIndex !== -1 &&
-        groupIndex === type.length - 'Group'.length &&
-        !isGroup
-      ) {
-        logger(
-          "An entity's type that ends with `Group` must be a group entity and therefore has to have an explicit `isGroup: true` property"
-        )
-        isValid = false
-      }
+      logger.warn(
+        `Entity format is invalid. Issues detected:${validate.errors.map(
+          (e, i) => ` (${i + 1}) ${e.message}`
+        )} | Provided: ${JSON.stringify(input)}`
+      )
     }
 
     return isValid
   }
 
-  static _cloneObject(obj) {
-    const clone = Object.assign({}, obj)
-
-    if (obj.attributes !== undefined) {
-      clone.attributes = Object.assign({}, obj.attributes)
+  static hydrateInput(input) {
+    // If input has no ID, no chance of passing validation test next so return asap
+    if (input.id === undefined) {
+      return
     }
 
-    if (obj.group !== undefined) {
-      clone.group = Object.assign({}, obj.group)
+    // If group has no ID, no chance of passing validation so return asap
+    if (input.group !== undefined && input.group.id === undefined) {
+      return
+    }
 
-      if (obj.group.attributes !== undefined) {
-        clone.group.attributes = Object.assign({}, obj.group.attributes)
+    // If attributes is empty, delete it from input
+    if (
+      input.attributes !== undefined &&
+      Object.keys(input.attributes).length === 0
+    ) {
+      input.attributes = undefined
+    }
+
+    // If group is empty, delete it from input
+    if (
+      input.group !== undefined &&
+      input.group.attributes !== undefined &&
+      Object.keys(input.group.attributes).length === 0
+    ) {
+      input.group.attributes = undefined
+    }
+
+    // If group attributes are empty, delete it from input
+
+    // If entity has no type, assign default type
+    if (input.type === undefined) {
+      input.type = DEFAULT_ENTITY_TYPE
+    }
+
+    // If entity ID is integer, cast to string
+    if (Number.isInteger(input.id)) {
+      const idString = '' + input.id
+      input.id = idString
+    }
+
+    // If entity has no display name, assign default display name
+    if (input.displayName === undefined) {
+      input.displayName = `${input.type}-${input.id}`
+    }
+
+    // Set default `isGroup` (false) if doesn't exist
+    if (input.isGroup === undefined) {
+      input.isGroup = false
+    }
+
+    if (input.group !== undefined) {
+      const group = input.group
+
+      // If group has no type, assign default type
+      if (group.type === undefined) {
+        group.type = input.type + 'Group'
       }
-    }
 
-    return clone
-  }
-
-  static _fillInFields(obj) {
-    if (obj.type === undefined) {
-      obj.type = DEFAULT_ENTITY_TYPE
-    }
-
-    if (obj.displayName === undefined) {
-      obj.displayName = '' + obj.id
-    }
-
-    if (obj.isGroup === undefined) {
-      obj.isGroup = false
-    }
-
-    if (Number.isInteger(obj.id)) {
-      const idStr = '' + obj.id
-      if (idStr.length > 250) {
-        logger('Integer id must have 250 digits or less')
-        return false
-      }
-      obj.id = idStr
-    }
-
-    let group = null
-    if (obj.group !== undefined) {
-      group = obj.group
-    }
-
-    if (group !== null && group.displayName === undefined) {
-      group.displayName = '' + group.id
-    }
-
-    if (group !== null && group.type === undefined) {
-      group.type = obj.type + 'Group'
-    }
-
-    if (group !== null) {
-      group.isGroup = true
-    }
-
-    if (group !== null) {
+      // If group ID is integer, case to string
       if (Number.isInteger(group.id)) {
-        const idStr = '' + group.id
-        if (idStr.length > 250) {
-          logger('Integer id must have 250 digits or less')
-          return false
-        }
-        group.id = idStr
+        const idString = '' + group.id
+        group.id = idString
+      }
+
+      // If group has no display name, assign default display name
+      if (group.displayName === undefined) {
+        group.displayName = `${group.type}-${group.id}`
       }
     }
-
-    return true
   }
 
-  getHash() {
-    return md5(
-      stringify({
-        ...this.object,
-        attributes: this.object.attributes || {},
-        group: {
-          ...this.object.group,
-          attributes: (this.object.group && this.object.group.attributes) || {}
-        }
-      })
-    )
-  }
-
-  getId() {
-    const obj = this.object
-    return `${obj.type}_${obj.id}`
+  getEntity() {
+    return this.entity
   }
 
   isValid() {
-    return this.object !== null
-  }
-
-  getRawObject() {
-    return this.object
-  }
-
-  getObject() {
-    const obj = this.object
-    const clone = Object.assign({}, obj)
-    delete clone.group
-    return new Entity(clone)
+    return this.entity !== null
   }
 
   getGroup() {
-    const group = this.object.group || null
-    return group && new Entity(group)
+    return this.object.group ? new Entity(this.object.group) : null
   }
 }

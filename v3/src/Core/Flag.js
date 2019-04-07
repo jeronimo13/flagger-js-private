@@ -1,7 +1,8 @@
 // Builtins and externals
 
 // Internals
-import logger from './logger'
+import Entity from './Entity'
+import logger from '../logger'
 
 export default class Flag {
   constructor(flag) {
@@ -12,6 +13,8 @@ export default class Flag {
       logger.warn(`Detected a previously unseen flag called: ${this.codename}`)
     } else {
       this.codename = flag.codename
+      this.isPaused = flag.isPaused
+      this.offTreatment = flag.offTreatment
 
       this._flagStatus = flag.flagStatus
       this._flagType = flag.flagType
@@ -22,7 +25,6 @@ export default class Flag {
       this._overrides = flag.overrides
       this._populations = flag.populations
       this._splits = flag.splits
-      this._isPaused = flag.isPaused
     }
   }
 
@@ -83,4 +85,24 @@ export default class Flag {
       `Flag <${this.codename}> | isEligible() called for Entity <${entity}>`
     )
   }
+
+  _resolveResult(entity) {
+    const entityObject = this._resolveEntity(entity)
+    const finalAllocation = this._resolveAllocations(
+      this._getAllocation(entityObject), // resolve base entity allocation
+      this._getAllocation(entityObject.getGroup()) // resolve group's allocation
+    )
+    return finalAllocation
+  }
+
+  // Resolves entity input which could be an object or an Entity
+  _resolveEntity(entityInput) {
+    return entityInput instanceof Entity ? entityInput : new Entity(entityInput)
+  }
+
+  _getAllocation(entity) {
+    const offTreatment = this.offTreatment
+  }
+
+  _resolveAllocations(allocation1, allocation2) {}
 }

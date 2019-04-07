@@ -29,9 +29,11 @@ export default class Flagger extends FlaggerCore {
     logger.log(phrase)
   }
 
-  //   configure(options) {
-  //     // SEND_SIGNAL: Start configuration...
-  //   }
+  configure(options) {
+    // Override Flagger Core configure function
+    // SEND_SIGNAL: Start configuration...
+    // returns promise
+  }
 
   //   flag(flagName) {
   //     // returns a flag

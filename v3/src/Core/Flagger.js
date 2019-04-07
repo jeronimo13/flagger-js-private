@@ -4,21 +4,22 @@ export default class Flagger {
   // Public API
 
   constructor() {
-    // Variable holding whether configuration is done
-    this.configurationComplete = false
-
     // Instantiate an instance of Store
     this.store = new Store()
   }
 
-  // configure(flagConfig) {
-  //   // Set this in store
+  configure({
+    gatingInfo,
+    debug = false,
+    gatingInfoUrl = '',
+    backupInofIrl = ''
+  }) {
+    this.store.setGatingInfo(gatingInfo)
+  }
 
-  // }
-
-  // flag(flagName) {
-  //   // returns a flag
-  // }
+  flag(flagName) {
+    return this.store.getFlag(flagName)
+  }
 
   // shutdown() {
 
