@@ -1,5 +1,5 @@
-import Ajv from 'ajv'
-import ajvErrors from 'ajv-errors'
+// import Ajv from 'ajv'
+// import ajvErrors from 'ajv-errors'
 import md5 from 'md5'
 import {logger} from './logger'
 import stringify from 'fast-json-stable-stringify'
@@ -211,9 +211,11 @@ const SCHEMA = {
   }
 }
 
-const ajv = Ajv({allErrors: true, jsonPointers: true})
-ajvErrors(ajv)
-const validate = ajv.compile(SCHEMA)
+// const ajv = Ajv({allErrors: true, jsonPointers: true})
+// ajvErrors(ajv)
+const validate = () => {
+  return true
+}
 
 export const DEFAULT_ENTITY_TYPE = 'User'
 

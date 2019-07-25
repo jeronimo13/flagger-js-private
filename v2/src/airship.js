@@ -64,7 +64,7 @@ export default class Airship extends Environment {
     this.shouldIngestExposures = true
     this.shouldIngestFlags = true
 
-    this.restartIngestionWorker()
+    // this.restartIngestionWorker()
   }
 
   restartIngestionWorker() {
@@ -196,32 +196,37 @@ export default class Airship extends Environment {
     await this.maybeIngest(true)
   }
 
-  getContent(url, timeout = REQUEST_TIMEOUT) {
-    return new Promise((resolve, reject) => {
-      const urlObj = URL.parse(url)
+  async getContent(url, timeout = REQUEST_TIMEOUT) {
+    // return new Promise((resolve, reject) => {
+    const urlObj = URL.parse(url)
 
-      const lib = urlObj.protocol === 'https:' ? https : http
+    const lib = urlObj.protocol === 'https:' ? https : http
+    console.log('url: ', url)
+    const response = await fetch(url)
+    console.log('response: ', response)
+    const data = await response.json()
+    console.log('data: ', data)
+    return data
+    // const request = lib.get(url, response => {
+    //   if (response.statusCode < 200 || response.statusCode > 299) {
+    //     reject('Failed to load page, status code: ' + response.statusCode)
+    //   }
+    //   const body = []
 
-      const request = lib.get(url, response => {
-        if (response.statusCode < 200 || response.statusCode > 299) {
-          reject('Failed to load page, status code: ' + response.statusCode)
-        }
-        const body = []
+    //   response.on('data', chunk => body.push(chunk))
 
-        response.on('data', chunk => body.push(chunk))
+    //   response.on('end', () => {
+    //     resolve(body.join(''))
+    //   })
+    // })
 
-        response.on('end', () => {
-          resolve(body.join(''))
-        })
-      })
+    // request.on('error', err => reject(err))
 
-      request.on('error', err => reject(err))
-
-      request.setTimeout(timeout, () => {
-        request.abort()
-        reject('Request timed out')
-      })
-    })
+    // request.setTimeout(timeout, () => {
+    //   request.abort()
+    //   reject('Request timed out')
+    // })
+    // })
   }
 
   postContent(
@@ -274,18 +279,16 @@ export default class Airship extends Environment {
 
   async _getGatingInfo() {
     const body = await this.getContent(
-      `${this.primaryServerUrl}${GATING_INFO_ENDPOINT}/${
-        this.envKey
-      }?casing=camel`
+      `${this.primaryServerUrl}${GATING_INFO_ENDPOINT}/${this.envKey}?casing=camel`
     )
-    return JSON.parse(body)
+    return body
   }
 
   async _getBackupGatingInfo() {
     const body = await this.getContent(
       `${BACKUP_GATING_INFO_ENDPOINT}/${this.envKey}-camel`
     )
-    return JSON.parse(body)
+    return body
   }
 
   updateSDK() {
@@ -371,6 +374,7 @@ export default class Airship extends Environment {
       stat.stop()
       this._saveStat(stat)
     } catch (err) {
+      console.log(err)
       logger(err)
 
       return false
@@ -397,6 +401,8 @@ export default class Airship extends Environment {
     this.init()
 
     this.failed = false
+
+    console.log('primaryServerUrl: ', this.primaryServerUrl)
 
     // First try the Airship server
     if (
@@ -496,9 +502,7 @@ export default class Airship extends Environment {
     this._unsubscribeFromUpdates()
 
     this.eventSource = new EventSource(
-      `${this.sseServerUrl}${SSE_GATING_INFO_ENDPOINT}?envkey=${
-        this.envKey
-      }&casing=camel`
+      `${this.sseServerUrl}${SSE_GATING_INFO_ENDPOINT}?envkey=${this.envKey}&casing=camel`
     )
     this.eventSource.addEventListener('gatingInfoUpdate', evt => {
       const gatingInfo = JSON.parse(evt.data)

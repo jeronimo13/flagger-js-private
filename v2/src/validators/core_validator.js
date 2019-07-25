@@ -1,6 +1,6 @@
 import {logger} from '../logger'
-import Ajv from 'ajv'
-import ajvErrors from 'ajv-errors'
+// import Ajv from 'ajv'
+// import ajvErrors from 'ajv-errors'
 
 const SCHEMA = {
   type: 'object',
@@ -146,9 +146,11 @@ const SCHEMA = {
   }
 }
 
-const ajv = Ajv({allErrors: true, jsonPointers: true})
-ajvErrors(ajv)
-const validate = ajv.compile(SCHEMA)
+// const ajv = Ajv({allErrors: true, jsonPointers: true})
+// ajvErrors(ajv)
+const validate = () => {
+  return true
+}
 
 export const isValidFlagConfig = flagConfig => {
   const isValid = validate(flagConfig)

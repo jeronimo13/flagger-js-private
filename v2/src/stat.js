@@ -45,30 +45,30 @@ export default class Stat {
   }
 
   start() {
-    if (this.averageDuration !== 0) {
-      throw 'Duration already calculated'
-    }
+    // if (this.averageDuration !== 0) {
+    //   throw 'Duration already calculated'
+    // }
 
-    if (this.startTime !== null) {
-      throw 'Stat start() already called'
-    }
+    // if (this.startTime !== null) {
+    //   throw 'Stat start() already called'
+    // }
 
-    this.startTime = process.hrtime()
+    // this.startTime = process.hrtime()
     return this
   }
 
   stop() {
-    if (this.averageDuration !== 0) {
-      throw 'Duration already calculated'
-    }
+    // if (this.averageDuration !== 0) {
+    //   throw 'Duration already calculated'
+    // }
 
-    if (this.startTime === null) {
-      throw 'Stat start() has not been called'
-    }
+    // if (this.startTime === null) {
+    //   throw 'Stat start() has not been called'
+    // }
 
-    const stopTime = process.hrtime(this.startTime)
-    this.averageDuration = stopTime[0] * NS_PER_SEC + stopTime[1]
-    this.count = 1
+    // const stopTime = process.hrtime(this.startTime)
+    // this.averageDuration = stopTime[0] * NS_PER_SEC + stopTime[1]
+    // this.count = 1
     return this
   }
 
