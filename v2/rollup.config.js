@@ -24,20 +24,20 @@ export default [
       // }),
       // commonjs(),
       babel({
-        envName: 'browser'
-        // exclude: [
-        //   'node_modules/@babel/runtime-corejs2/core-js/**',
-        //   'node_modules/rollup-plugin-commonjs/**',
-        //   'node_modules/core-js/**'
-        // ]
+        envName: 'browser',
+        exclude: [
+          'node_modules/@babel/runtime-corejs2/core-js/**',
+          'node_modules/rollup-plugin-commonjs/**',
+          'node_modules/core-js/**'
+        ]
       }),
       json(),
       replace({
         __SDK_NAME__: 'js'
-      })
+      }),
       // globals(),
       // builtins(),
-      // uglify({compress: {reduce_funcs: false}})
+      uglify({compress: {reduce_funcs: false}})
     ]
   }
 ]

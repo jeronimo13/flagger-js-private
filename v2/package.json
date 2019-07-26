@@ -59,8 +59,6 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@babel/runtime-corejs2": "^7.0.0",
-    "ajv": "^6.5.3",
-    "ajv-errors": "^1.0.0",
     "eventsource": "^1.0.7",
     "md5": "^2.2.1",
     "prop-types": "^15.6.2"

@@ -196,90 +196,32 @@ export default class Airship extends Environment {
     await this.maybeIngest(true)
   }
 
-  async getContent(url, timeout = REQUEST_TIMEOUT) {
-    // return new Promise((resolve, reject) => {
-    const urlObj = URL.parse(url)
-
-    const lib = urlObj.protocol === 'https:' ? https : http
-    console.log('url: ', url)
+  async getContent(url) {
     const response = await fetch(url)
-    console.log('response: ', response)
     const data = await response.json()
-    console.log('data: ', data)
     return data
-    // const request = lib.get(url, response => {
-    //   if (response.statusCode < 200 || response.statusCode > 299) {
-    //     reject('Failed to load page, status code: ' + response.statusCode)
-    //   }
-    //   const body = []
-
-    //   response.on('data', chunk => body.push(chunk))
-
-    //   response.on('end', () => {
-    //     resolve(body.join(''))
-    //   })
-    // })
-
-    // request.on('error', err => reject(err))
-
-    // request.setTimeout(timeout, () => {
-    //   request.abort()
-    //   reject('Request timed out')
-    // })
-    // })
   }
 
-  postContent(
-    url,
-    data,
-    contentType = 'application/json',
-    timeout = REQUEST_TIMEOUT
-  ) {
-    return new Promise((resolve, reject) => {
-      const urlObj = URL.parse(url)
-
-      const lib = urlObj.protocol === 'https:' ? https : http
-
-      const options = {
-        protocol: urlObj.protocol,
-        hostname: urlObj.hostname,
-        port: urlObj.port,
-        path: urlObj.path,
-        method: 'POST',
-        headers: {
-          'Content-Type': contentType,
-          'Content-Length': Buffer.byteLength(data)
-        }
-      }
-      const request = lib.request(options, response => {
-        if (response.statusCode < 200 || response.statusCode > 299) {
-          reject('Failed to post to url, status code: ' + response.statusCode)
-        }
-
-        const body = []
-
-        response.on('data', chunk => body.push(chunk))
-
-        response.on('end', () => resolve(body.join('')))
-      })
-
-      request.on('error', err => {
-        reject(err)
-      })
-
-      request.setTimeout(timeout, () => {
-        request.abort()
-        reject('Request timed out')
-      })
-
-      request.write(data)
-      request.end()
+  async postContent(url, data, contentType = 'application/json') {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': contentType,
+        'Content-Length': Buffer.byteLength(data)
+      },
+      redirect: 'follow',
+      body: JSON.stringify(data)
+    }
+    await fetch(url, options).catch(err => {
+      reject('Failed to post to url')
     })
   }
 
   async _getGatingInfo() {
     const body = await this.getContent(
-      `${this.primaryServerUrl}${GATING_INFO_ENDPOINT}/${this.envKey}?casing=camel`
+      `${this.primaryServerUrl}${GATING_INFO_ENDPOINT}/${
+        this.envKey
+      }?casing=camel`
     )
     return body
   }
@@ -402,8 +344,6 @@ export default class Airship extends Environment {
 
     this.failed = false
 
-    console.log('primaryServerUrl: ', this.primaryServerUrl)
-
     // First try the Airship server
     if (
       !(await this.updateGatingInfo(
@@ -502,7 +442,9 @@ export default class Airship extends Environment {
     this._unsubscribeFromUpdates()
 
     this.eventSource = new EventSource(
-      `${this.sseServerUrl}${SSE_GATING_INFO_ENDPOINT}?envkey=${this.envKey}&casing=camel`
+      `${this.sseServerUrl}${SSE_GATING_INFO_ENDPOINT}?envkey=${
+        this.envKey
+      }&casing=camel`
     )
     this.eventSource.addEventListener('gatingInfoUpdate', evt => {
       const gatingInfo = JSON.parse(evt.data)
