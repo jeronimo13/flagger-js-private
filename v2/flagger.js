@@ -61,7 +61,7 @@
           e.url,
           e._Object$keys
         ))
-})(this, function(i, g, t, e, k, n, r, f, h, m, p, b, I, v, a, s, o, u) {
+})(this, function(i, g, t, e, k, n, r, f, h, b, p, m, I, v, a, s, o, u) {
   'use strict'
   function l(e) {
     return (l =
@@ -148,7 +148,7 @@
     }
     return t
   }
-  function O(e, t) {
+  function x(e, t) {
     if ('function' != typeof t && null !== t)
       throw new TypeError('Super expression must either be null or a function')
     ;(e.prototype = Object.create(t && t.prototype, {
@@ -156,8 +156,8 @@
     })),
       t && T(e, t)
   }
-  function x(e) {
-    return (x = Object.setPrototypeOf
+  function O(e) {
+    return (O = Object.setPrototypeOf
       ? Object.getPrototypeOf
       : function(e) {
           return e.__proto__ || Object.getPrototypeOf(e)
@@ -189,20 +189,17 @@
     (r = r && r.hasOwnProperty('default') ? r.default : r),
     (f = f && f.hasOwnProperty('default') ? f.default : f),
     (h = h && h.hasOwnProperty('default') ? h.default : h),
-    (m = m && m.hasOwnProperty('default') ? m.default : m),
-    (p = p && p.hasOwnProperty('default') ? p.default : p),
     (b = b && b.hasOwnProperty('default') ? b.default : b),
+    (p = p && p.hasOwnProperty('default') ? p.default : p),
+    (m = m && m.hasOwnProperty('default') ? m.default : m),
     (I = I && I.hasOwnProperty('default') ? I.default : I),
     (v = v && v.hasOwnProperty('default') ? v.default : v),
     (u = u && u.hasOwnProperty('default') ? u.default : u)
   var P = function(e) {
     console.error(e)
   }
-  var U = function() {
-      return !0
-    },
-    G = 'User',
-    N = (function() {
+  var U = 'User',
+    G = (function() {
       function n(e) {
         y(this, n)
         var t = n.isValidObject(e)
@@ -272,18 +269,10 @@
             {
               key: 'isValidObject',
               value: function(e) {
-                var t = !0
-                if (
-                  (t ||
-                    P(
-                      U.errors.map(function(e) {
-                        return e.message
-                      })
-                    ),
-                  t)
-                ) {
+                var t = !!e
+                if (t) {
                   var n = void 0 !== e.isGroup && e.isGroup,
-                    r = void 0 !== e.type ? e.type : G,
+                    r = void 0 !== e.type ? e.type : U,
                     i = r.lastIndexOf('Group')
                   ;-1 === i ||
                     i !== r.length - 'Group'.length ||
@@ -315,7 +304,7 @@
               key: '_fillInFields',
               value: function(e) {
                 if (
-                  (void 0 === e.type && (e.type = G),
+                  (void 0 === e.type && (e.type = U),
                   void 0 === e.displayName && (e.displayName = '' + e.id),
                   void 0 === e.isGroup && (e.isGroup = !1),
                   i(e.id))
@@ -350,27 +339,27 @@
         n
       )
     })(),
-    A = 'string',
-    L = 'float',
-    C = 'boolean',
-    K = 'date',
-    R = 'datetime',
-    M = 'is',
-    F = 'is_not',
-    z = 'in',
-    q = 'not_in',
-    V = 'lt',
-    W = 'lte',
-    B = 'gt',
-    H = 'gte',
-    Y = 'from',
-    $ = 'until',
-    J = 'after',
-    X = 'before',
-    Z = function(e) {
+    N = 'string',
+    A = 'float',
+    L = 'boolean',
+    C = 'date',
+    K = 'datetime',
+    R = 'is',
+    M = 'is_not',
+    F = 'in',
+    z = 'not_in',
+    q = 'lt',
+    V = 'lte',
+    W = 'gt',
+    B = 'gte',
+    H = 'from',
+    Y = 'until',
+    $ = 'after',
+    J = 'before',
+    X = function(e) {
       return (1 * n(t(e), 16)) / 3402823669209385e23
     },
-    Q = (function() {
+    Z = (function() {
       function h(e) {
         y(this, h), (this.population = e)
       }
@@ -385,47 +374,47 @@
                 if (!n.hasOwnProperty(e.attributeName)) return !1
                 var r = n[e.attributeName],
                   i = h.categorizeValueType(r),
-                  a = ['int', L]
+                  a = ['int', A]
                 if (-1 !== a.indexOf(i) && -1 !== a.indexOf(e.attributeType));
                 else if (i !== e.attributeType) return !1
                 var s = e.value,
                   o = e.valueList,
                   u = e.operator
-                if (i === A)
-                  return u === M
+                if (i === N)
+                  return u === R
                     ? r === s
-                    : u === F
+                    : u === M
                       ? r !== s
-                      : u === z
+                      : u === F
                         ? -1 !== o.indexOf(r)
-                        : u === q
+                        : u === z
                           ? -1 === o.indexOf(r)
                           : (P('Invalid rule operator encountered'), !1)
                 if (-1 !== a.indexOf(i))
-                  return u === M
+                  return u === R
                     ? r === s
-                    : u === F
+                    : u === M
                       ? r !== s
-                      : u === z
+                      : u === F
                         ? -1 !== o.indexOf(r)
-                        : u === q
+                        : u === z
                           ? -1 === o.indexOf(r)
-                          : u === V
+                          : u === q
                             ? r < s
-                            : u === W
+                            : u === V
                               ? r <= s
-                              : u === B
+                              : u === W
                                 ? s < r
-                                : u === H
+                                : u === B
                                   ? s <= r
                                   : (P('Invalid rule operator encountered'), !1)
-                if (i === C)
-                  return u === M
+                if (i === L)
+                  return u === R
                     ? r === s
-                    : u === F
+                    : u === M
                       ? r !== s
                       : (P('Invalid rule operator encountered'), !1)
-                if (i !== K && i !== R)
+                if (i !== C && i !== K)
                   return P('Invalid attribute type encountered'), !1
                 var l = s && new Date(s).getTime(),
                   c =
@@ -434,21 +423,21 @@
                       return new Date(e).getTime()
                     }),
                   f = new Date(r).getTime()
-                return u === M
+                return u === R
                   ? f === l
-                  : u === F
+                  : u === M
                     ? f !== l
-                    : u === z
+                    : u === F
                       ? -1 !== c.indexOf(f)
-                      : u === q
+                      : u === z
                         ? -1 === c.indexOf(f)
-                        : u === Y
+                        : u === H
                           ? l <= f
-                          : u === $
+                          : u === Y
                             ? f <= l
-                            : u === J
+                            : u === $
                               ? l < f
-                              : u === X
+                              : u === J
                                 ? f < l
                                 : (P('Invalid rule operator encountered'), !1)
               }
@@ -469,7 +458,7 @@
                       .concat(this.population.hashKey, ':client_object_')
                       .concat(e.type, '_')
                       .concat(e.id),
-                    c = Z(l)
+                    c = X(l)
                   if (
                     c <= this.population.percentage &&
                     0 < this.population.percentage
@@ -494,27 +483,27 @@
                           .concat(t.hashKey, ':client_object_')
                           .concat(e.type, '_')
                           .concat(e.id),
-                        d = Z(v),
+                        d = X(v),
                         y = 0,
-                        m = n.treatments.filter(function(e) {
+                        b = n.treatments.filter(function(e) {
                           return !e.isOffTreatment
                         }),
-                        b = null,
+                        m = null,
                         I = 0;
-                      I < m.length;
+                      I < b.length;
                       I++
                     ) {
-                      var _ = m[I]
+                      var _ = b[I]
                       if (
                         h.hasOwnProperty(_.treatmentId) &&
                         d <=
                           (y = k((y + h[_.treatmentId].percentage).toFixed(3)))
                       ) {
-                        b = _
+                        m = _
                         break
                       }
                     }
-                    return {treatment: b, eligible: !0}
+                    return {treatment: m, eligible: !0}
                   }
                   return {eligible: !0}
                 }
@@ -545,7 +534,7 @@
         h
       )
     })(),
-    ee = (function() {
+    Q = (function() {
       function i(e, t) {
         if ((y(this, i), -1 === [i.TYPE_DURATION, i.TYPE_COUNT].indexOf(t)))
           throw 'Invalid stat type passed'
@@ -643,10 +632,10 @@
         i
       )
     })()
-  ;(ee.TYPE_DURATION = 'stat_type__duration'),
-    (ee.TYPE_COUNT = 'stat_type__count')
-  var te,
-    ne = (function() {
+  ;(Q.TYPE_DURATION = 'stat_type__duration'),
+    (Q.TYPE_COUNT = 'stat_type__count')
+  var ee,
+    te = (function() {
       function n(e, t) {
         y(this, n),
           'string' == typeof e
@@ -748,7 +737,7 @@
         n
       )
     })(),
-    re = (function() {
+    ne = (function() {
       function e() {
         y(this, e)
       }
@@ -786,7 +775,7 @@
           {
             key: '_identifyObject',
             value: function(e) {
-              return e instanceof N ? e : new N(e)
+              return e instanceof G ? e : new G(e)
             }
           },
           {key: '_saveStat', value: function() {}},
@@ -817,7 +806,7 @@
           {
             key: 'flag',
             value: function(e) {
-              var t = this.router ? this.router.getFlag(e) : new ne(e)
+              var t = this.router ? this.router.getFlag(e) : new te(e)
               return t.setDelegate(this), t
             }
           },
@@ -852,7 +841,7 @@
                 f < u.length;
                 f++
               ) {
-                var h = new Q(u[f]).getGateValues(s, this.router.getEnv(), e, o)
+                var h = new Z(u[f]).getGateValues(s, this.router.getEnv(), e, o)
                 if (((c = c || h.eligible), h.treatment)) {
                   l = h.treatment
                   break
@@ -893,7 +882,7 @@
           {
             key: 'getTreatment',
             value: function(e, t) {
-              var n = new ee('duration__get_treatment', ee.TYPE_DURATION)
+              var n = new Q('duration__get_treatment', Q.TYPE_DURATION)
               n.start(), (t = t || this.object)
               var r = this._identifyObject(t)
               if (!r.isValid() || e.isUncategorized()) return 'off'
@@ -914,7 +903,7 @@
           {
             key: 'getPayload',
             value: function(e, t) {
-              var n = new ee('duration__get_payload', ee.TYPE_DURATION)
+              var n = new Q('duration__get_payload', Q.TYPE_DURATION)
               n.start(), (t = t || this.object)
               var r = this._identifyObject(t)
               if (!r.isValid() || e.isUncategorized()) return null
@@ -935,7 +924,7 @@
           {
             key: 'isEligible',
             value: function(e, t) {
-              var n = new ee('duration__is_eligible', ee.TYPE_DURATION)
+              var n = new Q('duration__is_eligible', Q.TYPE_DURATION)
               n.start(), (t = t || this.object)
               var r = this._identifyObject(t)
               if (!r.isValid() || e.isUncategorized()) return !1
@@ -951,7 +940,7 @@
           {
             key: 'isEnabled',
             value: function(e, t) {
-              var n = new ee('duration__is_enabled', ee.TYPE_DURATION)
+              var n = new Q('duration__is_enabled', Q.TYPE_DURATION)
               n.start(), (t = t || this.object)
               var r = this._identifyObject(t)
               if (!r.isValid() || e.isUncategorized()) return !1
@@ -971,14 +960,14 @@
         e
       )
     })(),
-    ie = function e(t, n) {
+    re = function e(t, n) {
       if ((y(this, e), null == t))
         throw 'Cannot have an undefined or null key for a LRUNode'
       if (null == n)
         throw 'Cannot have an undefined or null value for a LRUNode'
       ;(this.key = t), (this.value = n), (this.prev = null), (this.next = null)
     },
-    ae = (function() {
+    ie = (function() {
       function t(e) {
         y(this, t),
           (this.size = 0),
@@ -1003,7 +992,7 @@
           {
             key: 'set',
             value: function(e, t) {
-              var n = new ie(e, t)
+              var n = new re(e, t)
               this.map[e]
                 ? ((this.map[e].value = n.value), this.remove(n.key))
                 : this.size >= this.limit &&
@@ -1019,7 +1008,7 @@
             value: function(e) {
               if (this.map[e]) {
                 var t = this.map[e].value,
-                  n = new ie(e, t)
+                  n = new re(e, t)
                 return this.remove(e), this.setHead(n), t
               }
               return null
@@ -1055,7 +1044,7 @@
         t
       )
     })(),
-    se = (function() {
+    ae = (function() {
       function t(e) {
         y(this, t),
           (this.gatingInfo = e),
@@ -1088,8 +1077,8 @@
                   ;(i.treatments = l),
                     (i.treatmentsMap = c),
                     (i.offTreatment = f),
-                    (t[i.codename] = new ne(i))
-                } else t[i.codename] = new ne(i)
+                    (t[i.codename] = new te(i))
+                } else t[i.codename] = new te(i)
               }
               return t
             }
@@ -1161,7 +1150,7 @@
           {
             key: 'getFlag',
             value: function(e) {
-              return this.gatingInfoMap[e] || new ne(e)
+              return this.gatingInfoMap[e] || new te(e)
             }
           },
           {
@@ -1180,20 +1169,20 @@
         t
       )
     })(),
-    oe = ''.concat('https://backup-api.airshiphq.com', '/v2/gating-info'),
-    ue = (function(e) {
+    se = ''.concat('https://backup-api.airshiphq.com', '/v2/gating-info'),
+    oe = (function(e) {
       function n(e) {
         var t
         return (
           y(this, n),
-          ((t = D(this, x(n).call(this))).gatingInfoListener = e),
+          ((t = D(this, O(n).call(this))).gatingInfoListener = e),
           t.init(),
           t
         )
       }
       var t, r, i, a, s, o, u, l, c
       return (
-        O(n, re),
+        x(n, ne),
         w(n, [
           {
             key: 'init',
@@ -1207,7 +1196,7 @@
                 (this.exposures = []),
                 (this.flags = new I()),
                 (this.oldFlags = new I()),
-                (this.objectLRUCache = new ae(500)),
+                (this.objectLRUCache = new ie(500)),
                 (this.firstIngestion = !0),
                 (this.shouldIngestObjects = !0),
                 (this.shouldIngestStats = !0),
@@ -1268,7 +1257,7 @@
                               (r = this.objects),
                               (i = this.stats),
                               (a = this.exposures),
-                              (s = b(this.flags)).forEach(function(e) {
+                              (s = m(this.flags)).forEach(function(e) {
                                 o.oldFlags.add(e)
                               }),
                               (this.objects = []),
@@ -1316,7 +1305,7 @@
           {
             key: '_identifyObject',
             value: function(e) {
-              var t = re.prototype._identifyObject.call(this, e)
+              var t = ne.prototype._identifyObject.call(this, e)
               if (!t.isValid()) return t
               var n = t.getId(),
                 r = t.getHash(),
@@ -1332,7 +1321,7 @@
           {
             key: '_compactStats',
             value: function() {
-              this.stats = ee.compactStats(this.stats)
+              this.stats = Q.compactStats(this.stats)
             }
           },
           {
@@ -1360,7 +1349,7 @@
                     for (;;)
                       switch ((e.prev = e.next)) {
                         case 0:
-                          if (m(t)) {
+                          if (b(t)) {
                             e.next = 3
                             break
                           }
@@ -1404,10 +1393,27 @@
                         case 0:
                           return (e.next = 2), fetch(t)
                         case 2:
-                          return (n = e.sent), (e.next = 5), n.json()
-                        case 5:
-                          return (r = e.sent), e.abrupt('return', r)
-                        case 7:
+                          if (
+                            ((n = e.sent),
+                            (r = n.headers.get('content-type')) &&
+                              'application/json' === r)
+                          )
+                            return e.abrupt(
+                              'return',
+                              n.json().then(function(e) {
+                                return e
+                              })
+                            )
+                          e.next = 8
+                          break
+                        case 8:
+                          return e.abrupt(
+                            'return',
+                            n.text().then(function(e) {
+                              return e
+                            })
+                          )
+                        case 9:
                         case 'end':
                           return e.stop()
                       }
@@ -1427,7 +1433,9 @@
               f.mark(function e(t, n) {
                 var r,
                   i,
-                  a = arguments
+                  a,
+                  s,
+                  o = arguments
                 return f.wrap(
                   function(e) {
                     for (;;)
@@ -1435,8 +1443,8 @@
                         case 0:
                           return (
                             (r =
-                              2 < a.length && void 0 !== a[2]
-                                ? a[2]
+                              2 < o.length && void 0 !== o[2]
+                                ? o[2]
                                 : 'application/json'),
                             (i = {
                               method: 'POST',
@@ -1445,14 +1453,33 @@
                                 'Content-Length': Buffer.byteLength(n)
                               },
                               redirect: 'follow',
-                              body: p(n)
+                              body: n
                             }),
                             (e.next = 4),
-                            fetch(t, i).catch(function(e) {
-                              reject('Failed to post to url')
-                            })
+                            fetch(t, i)
                           )
                         case 4:
+                          if (
+                            ((a = e.sent),
+                            (s = a.headers.get('content-type')) &&
+                              'application/json' === s)
+                          )
+                            return e.abrupt(
+                              'return',
+                              a.json().then(function(e) {
+                                return e
+                              })
+                            )
+                          e.next = 10
+                          break
+                        case 10:
+                          return e.abrupt(
+                            'return',
+                            a.text().then(function(e) {
+                              return e
+                            })
+                          )
+                        case 11:
                         case 'end':
                           return e.stop()
                       }
@@ -1514,7 +1541,7 @@
                           return (
                             (e.next = 2),
                             this.getContent(
-                              ''.concat(oe, '/').concat(this.envKey, '-camel')
+                              ''.concat(se, '/').concat(this.envKey, '-camel')
                             )
                           )
                         case 2:
@@ -1569,14 +1596,14 @@
                         case 0:
                           return (
                             (e.prev = 0),
-                            (r = new ee(t, ee.TYPE_DURATION)).start(),
+                            (r = new Q(t, Q.TYPE_DURATION)).start(),
                             (e.next = 5),
                             n()
                           )
                         case 5:
                           ;(i = e.sent),
                             (a = i),
-                            (this.router = new se(a)),
+                            (this.router = new ae(a)),
                             this.updateSDK(),
                             this.gatingInfoListener &&
                               this.gatingInfoListener(a),
@@ -1718,7 +1745,7 @@
           {
             key: 'flag',
             value: function(e) {
-              var t = re.prototype.flag.call(this, e)
+              var t = ne.prototype.flag.call(this, e)
               return (
                 t.isWild() &&
                   (this.oldFlags.has(e) ||
@@ -1788,7 +1815,7 @@
                   e
                 ) {
                   var t = JSON.parse(e.data)
-                  ;(n.router = new se(t)),
+                  ;(n.router = new ae(t)),
                     n.updateSDK(),
                     n.gatingInfoListener && n.gatingInfoListener(t),
                     (n.lastSSEConnectTimestamp = h())
@@ -1809,14 +1836,14 @@
         n
       )
     })(),
-    le = (S((te = {}), A, new I([M, F, z, q])),
-    S(te, 'int', new I([M, F, z, q, V, W, B, H])),
-    S(te, L, new I([M, F, z, q, V, W, B, H])),
-    S(te, C, new I([M, F])),
-    S(te, K, new I([M, F, z, q, Y, $, J, X])),
-    S(te, R, new I([M, F, z, q, Y, $, J, X])),
-    te),
-    ce = function(v) {
+    ue = (S((ee = {}), N, new I([R, M, F, z])),
+    S(ee, 'int', new I([R, M, F, z, q, V, W, B])),
+    S(ee, A, new I([R, M, F, z, q, V, W, B])),
+    S(ee, L, new I([R, M])),
+    S(ee, C, new I([R, M, F, z, H, Y, $, J])),
+    S(ee, K, new I([R, M, F, z, H, Y, $, J])),
+    ee),
+    le = function(v) {
       for (
         var d = [],
           y = u(v),
@@ -1881,10 +1908,10 @@
               ) {
                 var f = u[c],
                   h = void 0
-                if (m(f.value)) {
+                if (b(f.value)) {
                   var p = new I(
                     f.value.map(function(e) {
-                      return Q.categorizeValueType(e)
+                      return Z.categorizeValueType(e)
                     })
                   )
                   if (1 != p.size)
@@ -1894,16 +1921,16 @@
                       ),
                       {v: null}
                     )
-                  h = b(p)[0]
-                } else h = Q.categorizeValueType(f.value)
+                  h = m(p)[0]
+                } else h = Z.categorizeValueType(f.value)
                 var g = {
                   attributeName: f.attribute,
                   attributeType: h,
                   operator: f.operator,
-                  value: m(f.value) ? null : f.value,
-                  valueList: m(f.value) ? f.value : null
+                  value: b(f.value) ? null : f.value,
+                  valueList: b(f.value) ? f.value : null
                 }
-                if (!le[h].has(f.operator))
+                if (!ue[h].has(f.operator))
                   return (
                     P(
                       "Population's filter operator `"
@@ -1916,14 +1943,14 @@
                     {v: null}
                   )
                 if (g.valueList) {
-                  if (g.operator !== z && g.operator !== q)
+                  if (g.operator !== F && g.operator !== z)
                     return (
                       P(
                         "Population's filter operator must be `in` or `not_in` if the value is an array."
                       ),
                       {v: null}
                     )
-                } else if (g.operator === z && g.operator === q)
+                } else if (g.operator === F && g.operator === z)
                   return (
                     P(
                       "Population's filter operator must not be `in` or `not_in` if the value is a number, boolean or string."
@@ -1962,13 +1989,13 @@
       }
       return {flags: d, env: {hashKey: 'env-1', envKey: null}}
     },
-    fe = (function(e) {
+    ce = (function(e) {
       function t() {
-        return y(this, t), D(this, x(t).apply(this, arguments))
+        return y(this, t), D(this, O(t).apply(this, arguments))
       }
       var n
       return (
-        O(t, re),
+        x(t, ne),
         w(t, [
           {
             key: 'configure',
@@ -1980,12 +2007,12 @@
                     for (;;)
                       switch ((e.prev = e.next)) {
                         case 0:
-                          if (null === (n = ce(t)))
+                          if (null === (n = le(t)))
                             throw 'Failed to transform flagConfig into initial gating information'
                           e.next = 3
                           break
                         case 3:
-                          this.router = new se(n)
+                          this.router = new ae(n)
                         case 4:
                         case 'end':
                           return e.stop()
@@ -2004,9 +2031,9 @@
         t
       )
     })(),
-    he = new fe()
-  he.configure({})
-  var pe = (function() {
+    fe = new ce()
+  fe.configure({})
+  var he = (function() {
       function s() {
         y(this, s), (this.gatingInfoListeners = [])
       }
@@ -2096,7 +2123,7 @@
                             break
                           case 16:
                             return (
-                              (this.environment = new ue(
+                              (this.environment = new oe(
                                 this.handleGatingInfoUpdate.bind(this)
                               )),
                               (a = this.environment.configure(
@@ -2118,7 +2145,7 @@
                             break
                           case 26:
                             return (
-                              (this.environment = new fe()),
+                              (this.environment = new ce()),
                               (e.next = 29),
                               this.environment.configure(r)
                             )
@@ -2171,7 +2198,7 @@
             {
               key: 'flag',
               value: function(e) {
-                return (this.environment || he).flag(e)
+                return (this.environment || fe).flag(e)
               }
             },
             {
@@ -2227,7 +2254,7 @@
         s
       )
     })(),
-    ge = new pe()
-  return g(ge, {FlaggerBase: pe}), ge
+    pe = new he()
+  return g(pe, {FlaggerBase: he}), pe
 })
 //# sourceMappingURL=flagger.js.map
