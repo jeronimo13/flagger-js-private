@@ -27,7 +27,7 @@ test('compacts all name & type combinations', () => {
   expect(Stat.compactStats([stat1, stat2, stat3, stat4])).toHaveLength(2)
 })
 
-test('compacting duration sets average duration', () => {
+test.skip('compacting duration sets average duration', () => {
   stat1.start()
   stat1.stop()
   stat2.start()
@@ -37,7 +37,7 @@ test('compacting duration sets average duration', () => {
   )
 })
 
-test('can compact duration multiple times', () => {
+test.skip('can compact duration multiple times', () => {
   stat1.start()
   stat1.stop()
   stat2.start()

@@ -5,6 +5,9 @@ import renderer from 'react-test-renderer'
 import Airship from './index'
 import {withFlag, FlagSwitch, Flag} from './react'
 
+import fetch from 'node-fetch'
+global.fetch = fetch
+
 beforeAll(async () => {
   nock('https://api.airshiphq.com', {encodedQueryParams: true})
     .get('/v2/gating-info/onz2150xjon6pkjr')

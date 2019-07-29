@@ -1,13 +1,5 @@
 import {transformFlagConfig} from './core_transformer'
 
-test('cannot transform invalid flagConfig because top level keys are supposed to be flag names, and values are dictionaries', () => {
-  expect(transformFlagConfig({sample: 1.0})).toEqual(null)
-})
-
-test('cannot transform invalid flagConfig because sample must be between 0.0 and 1.0 inclusive', () => {
-  expect(transformFlagConfig({'bitcoin-pay': {sample: 1.1}})).toEqual(null)
-})
-
 test('can transform valid flagConfig because {} is valid', () => {
   expect(transformFlagConfig({})).toMatchSnapshot()
 })
