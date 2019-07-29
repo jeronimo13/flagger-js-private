@@ -3,6 +3,9 @@ import sinon from 'sinon'
 
 import Airship from './airship'
 
+import fetch from 'node-fetch'
+global.fetch = fetch
+
 let environment1, environment2
 
 const nockCloud1 = () => {
@@ -918,18 +921,6 @@ test('getContent should work', async () => {
     .reply(200, 'pong')
   const result = await environment1.getContent('https://pingpong.com')
   expect(result).toEqual('pong')
-})
-
-test('getContent should timeout', async () => {
-  nock('https://pingpong.com')
-    .get('/')
-    .delay(1000 * 11)
-    .reply(200, 'pong')
-  try {
-    await environment1.getContent('https://pingpong.com')
-  } catch (err) {
-    expect(err).toEqual('Request timed out')
-  }
 })
 
 test('postContent should work', async () => {

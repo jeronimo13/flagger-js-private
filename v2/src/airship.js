@@ -198,8 +198,18 @@ export default class Airship extends Environment {
 
   async getContent(url) {
     const response = await fetch(url)
-    const data = await response.json()
-    return data
+    const contentType = response.headers.get('content-type')
+    if (contentType && contentType === 'application/json') {
+      return response.json().then(data => {
+        // process your JSON data further
+        return data
+      })
+    } else {
+      return response.text().then(text => {
+        // this is text, do something with it
+        return text
+      })
+    }
   }
 
   async postContent(url, data, contentType = 'application/json') {
@@ -210,11 +220,21 @@ export default class Airship extends Environment {
         'Content-Length': Buffer.byteLength(data)
       },
       redirect: 'follow',
-      body: JSON.stringify(data)
+      body: data
     }
-    await fetch(url, options).catch(err => {
-      reject('Failed to post to url')
-    })
+    const response = await fetch(url, options)
+    const responseContentType = response.headers.get('content-type')
+    if (responseContentType && responseContentType === 'application/json') {
+      return response.json().then(data => {
+        // process your JSON data further
+        return data
+      })
+    } else {
+      return response.text().then(text => {
+        // this is text, do something with it
+        return text
+      })
+    }
   }
 
   async _getGatingInfo() {

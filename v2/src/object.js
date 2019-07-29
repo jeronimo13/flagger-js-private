@@ -2,7 +2,10 @@ import md5 from 'md5'
 import {logger} from './logger'
 import stringify from 'fast-json-stable-stringify'
 
-const validate = () => {
+const validate = obj => {
+  if (!obj) {
+    return false
+  }
   return true
 }
 
@@ -31,7 +34,7 @@ export default class AirshipObject {
   static isValidObject(obj) {
     let isValid = validate(obj)
     if (!isValid) {
-      logger(validate.errors.map(e => e.message))
+      // logger(validate.errors.map(e => e.message))
     }
 
     if (isValid) {
